@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
@@ -35,12 +34,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void showProgress() {
         DialogFragment dialog = new ProgressDialogFragment();
+        dialog.show(getSupportFragmentManager(), TAG_PROGRESS);
 
         // 例外対策
         // IllegalStateException: Can not perform this action after onSaveInstanceState
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(dialog, TAG_PROGRESS);
-        ft.commitAllowingStateLoss();
+//        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//        ft.add(dialog, TAG_PROGRESS);
+//        ft.commitAllowingStateLoss();
     }
 
     private void hideProgress() {
@@ -48,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
         if (fragment == null || !(fragment instanceof DialogFragment)) {
             return;
         }
-        ((DialogFragment) fragment).dismissAllowingStateLoss();
+//        ((DialogFragment) fragment).dismissAllowingStateLoss();
+        ((DialogFragment) fragment).dismiss();
     }
 
     private class ProgressTask extends AsyncTask<Void, Void, Void> {
